@@ -3,7 +3,7 @@
 ## Quigg Funksteckdosen-Set
 ### Steckdosen: GT-FSI-09 (innen), GT-FSA-04 (außen) Sender: GT-9000
 
-![Quigg Funksteckdosen-Set](https://github.com/DonKracho/ESPHome-External-Components/blob/main/images/quigg_funkstekdosen.jpg)
+![Quigg Funksteckdosen-Set](https://github.com/DonKracho/ESPHome-External-Components/blob/main/images/quigg_funksteckdosen.jpg)
 
 Dieses Funksteckdosen-Set wurde bei Aldi (Nord) ab 2014 angeboten. Es erwies sich als gut, weswegen ich nach und nach gleich mehrere dieser Sets gekauft habe. Die hohe Störsicherheit wird durch einen sogenannten Rolling-Code erreicht, d. h. der Schalt-Code ändert sich mit jeder Bedienung. Dadurch kann kann man aber nicht auf die ESPHome Standard-Komponente Remote-Transmitter zurückgreifen, die immer den gleichen Code für An und Aus senden würde. Ich habe seiner Zeit intensiv am Reverse Engeniering getüftelt um die Stekdosen mit einem ESP und 433MHz Sender bedienen zu können. Die Erkennnisse von damals habe ich hier nun in eine externe ESPHome Komponente migriert. Einige Bezeichnungen entspechen daher nicht den ESPHome konventionen. 
 
