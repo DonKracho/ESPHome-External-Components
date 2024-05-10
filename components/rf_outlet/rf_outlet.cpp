@@ -19,7 +19,7 @@ static const char *const TAG = "rf_outlet";
 
 class RfOutlet *pwm{nullptr};
 
-void IRAM_ATTR HOT timer_interrupt()
+void IRAM_ATTR timer_interrupt()
 {
   if (pwm->isCountRemaining()) pwm->tx_pin_->digital_write(!pwm->tx_pin_->digital_read());  // Toggle tx_pin_
   pwm->loadNextPulse();
@@ -29,7 +29,7 @@ void IRAM_ATTR HOT timer_interrupt()
 // ESP32 implementation, uses basically the same code but needs to wrap
 // timer_interrupt() function to auto-reschedule
 static hw_timer_t *rf_timer = nullptr;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
-void IRAM_ATTR HOT s_timer_intr() { timer_interrupt(); }
+void IRAM_ATTR s_timer_intr() { timer_interrupt(); }
 #endif
 
 void RfOutlet::setup() {
