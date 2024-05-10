@@ -1,6 +1,6 @@
-#ESPHome External Components
+# ESPHome External Components
 
-##Quigg Funksteckdosen-Set (Steckdosen: GT-FSI-09 (innen), GT-FSA-04 (außen) Sender: GT-9000)
+## Quigg Funksteckdosen-Set (Steckdosen: GT-FSI-09 (innen), GT-FSA-04 (außen) Sender: GT-9000)
 
 Dieses Funkstekdosenet wurde ab 2014 bei Aldi (Nord) angeboten. Es erwies sich als gut, weswegen ich nach und nach gleich mehrere dieser Sets gekauft habe.
 Die hohe Störsicherheit wird durch einen sogenannten Rooling-Code erreicht, d. h. der Schalt-Code ändert sich mit jeder Bedienung. Dadurch kann kann man
