@@ -4,8 +4,6 @@ from esphome import pins
 from esphome.components import output
 from esphome.const import CONF_ID, CONF_PIN
 
-CODEOWNERS = ["@glmnet"]
-
 rf_outlet_ns = cg.esphome_ns.namespace("rf_outlet")
 RfOutlet = rf_outlet_ns.class_("RfOutlet", output.FloatOutput, cg.Component)
 
