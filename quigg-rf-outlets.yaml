@@ -1,0 +1,172 @@
+substitutions:
+  name: quigg-rf-outlets
+  friendly_name: rf-switch
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  name_add_mac_suffix: false
+  project:
+    name: esphome.web
+    version: '1.0'
+
+esp8266:
+  board: d1_mini
+
+# Enable logging
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret esphome_encryption_key
+
+# Allow Over-The-Air updates
+ota:
+
+# Allow provisioning Wi-Fi via serial
+#improv_serial:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Set up a wifi access point
+  ap: {}
+
+# In combination with the `ap` this allows the user
+# to provision wifi credentials to the device via WiFi AP.
+captive_portal:
+
+dashboard_import:
+  package_import_url: github://esphome/example-configs/esphome-web/esp8266.yaml@main
+  import_full_config: true
+
+# To have a "next url" for improv serial
+web_server:
+
+external_components:
+  source: github://DonKracho/ESPHome-External-Components/components@main
+
+switch:
+  - platform: rf_switch
+    name: 'Licht'
+    icon: mdi:lightbulb
+    channel: 0
+    output: rf_transmitter
+
+  - platform: rf_switch
+    name: 'Quigg 01'
+    icon: mdi:power-socket-de
+    channel: 1
+    output: rf_transmitter
+
+  - platform: rf_switch
+    name: 'Quigg 02'
+    icon: mdi:power-socket-de
+    channel: 2
+    output: rf_transmitter
+
+  - platform: rf_switch
+    name: 'Quigg 03'
+    icon: mdi:power-socket-de
+    channel: 3
+    output: rf_transmitter
+
+# uncomment these switches for usage of more than 4 outlets
+#  - platform: rf_switch
+#    name: 'Quigg 04'
+#    icon: mdi:power-socket-de
+#    channel: 4
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 05'
+#    icon: mdi:power-socket-de
+#    channel: 5
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 06'
+#    icon: mdi:power-socket-de
+#    channel: 6
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 07'
+#    icon: mdi:power-socket-de
+#    channel: 7
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 08'
+#    icon: mdi:power-socket-de
+#    channel: 8
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 09'
+#    icon: mdi:power-socket-de
+#    channel: 9
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 11'
+#    icon: mdi:power-socket-de
+#    channel: 11
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 12'
+#    icon: mdi:power-socket-de
+#    channel: 12
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 13'
+#    icon: mdi:power-socket-de
+#    channel: 13
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    icon: mdi:power-socket-de
+#    name: 'Quigg 14'
+#    channel: 14
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    icon: mdi:power-socket-de
+#    name: 'Quigg 15'
+#    channel: 15
+#    output: rf_transmitter
+
+# special channel used for master function
+  - platform: rf_switch
+    name: 'Master'
+    id: master
+    channel: 10
+    output: rf_transmitter
+
+# special button for clearing an outlet
+button:
+  - platform: template
+    name: Clear Outlet
+    icon: "mdi:restore"
+    on_press:
+      - switch.turn_off: master
+
+# optional use of other ESP pins for ralays
+  - platform: gpio
+    name: 'Springbrunnen'
+    icon: "mdi:fountain"
+    pin:
+      number: GPIO5 #D1
+      inverted: true
+
+# this output component must exist! It is used as output for all rf_switches
+output:
+  - platform: rf_outlet
+    id: rf_transmitter
+    pin: GPIO2 # D4 (LED pin), do not invert this pin, because it uses an encoded float!
+    repeat: 6
