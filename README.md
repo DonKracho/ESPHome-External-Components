@@ -3,7 +3,7 @@
 ## Quigg Funksteckdosen-Set
 ### Steckdosen: GT-FSI-09 (innen), GT-FSA-04 (außen) Sender: GT-9000
 
-![Quigg Funksteckdosen-Set](https://github.com/DonKracho/ESPHome-External-Components/blob/main/images/P1140089.JPG)
+![Quigg Funksteckdosen-Set](https://github.com/DonKracho/ESPHome-External-Components/blob/main/images/quigg_funkstekdosen.jpg)
 
 Dieses Funksteckdosen-Set wurde bei Aldi (Nord) ab 2014 angeboten. Es erwies sich als gut, weswegen ich nach und nach gleich mehrere dieser Sets gekauft habe. Die hohe Störsicherheit wird durch einen sogenannten Rolling-Code erreicht, d. h. der Schalt-Code ändert sich mit jeder Bedienung. Dadurch kann kann man aber nicht auf die ESPHome Standard-Komponente Remote-Transmitter zurückgreifen, die immer den gleichen Code für An und Aus senden würde. Ich habe seiner Zeit intensiv am Reverse Engeniering getüftelt um die Stekdosen mit einem ESP und 433MHz Sender bedienen zu können. Die Erkennnisse von damals habe ich hier nun in eine externe ESPHome Komponente migriert. Einige Bezeichnungen entspechen daher nicht den ESPHome konventionen. 
 
@@ -18,4 +18,4 @@ In dieser externen ESPHome Komponente ist exemplarisch der Rolling-Code eines Se
 Fie Komponente __rf_transmiter__ war mein erster Ansatz vergleichbar der Implemetation der ESPHome Komponente __remote_transmitter__. Dies erwies sich aber eher als eine Fingerübung für mich, wie Automationen getriggert werden können. Eine Automation ist der der deutlich kompliziertere Weg. Nachdem ich nicht gleich herausgefunden habe, wie ich der Automation Parameter übergeben kann, habe ich diesen Ansatz also wieder verworfen. Der Code kann als Demonstartion für Automations-Templates genutzt werden.
 
 Für den einfachen Nachbau noch ein kleines Fritzing Schema. Als TX Pin ist im der ESPHome Beispielkonfiguration __quigg-rf-outlets.yaml__ D4 (GPIO2) gewählt worden, das kann aber an die eigenen Bedürfnisse angepasst werden.
-![Quigg Funksteckdosen-Set](https://github.com/DonKracho/ESPHome-External-Components/blob/main/images/quigg_funksteckdose.jpg)
+![Quigg Funksteckdosen-Set](https://github.com/DonKracho/ESPHome-External-Components/blob/main/images/quigg_funksteckdose_schaltplan.jpg)
