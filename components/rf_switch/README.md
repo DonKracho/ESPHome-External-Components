@@ -4,12 +4,12 @@
 switch:
   - platform: rf_switch
     name: 'rf switch'
-	output: rf_transmitter
-	channel: 0
+    output: rf_transmitter
+    channel: 0
 
 output:
   - platform: rf_outlet
-	id: rf_transmitter
+    id: rf_transmitter
     pin: GPIO2
-	repeat: 3
+    repeat: 6 # optional, default: 6
 ```
