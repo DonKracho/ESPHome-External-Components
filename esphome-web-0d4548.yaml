@@ -1,5 +1,5 @@
 substitutions:
-  name: esphome-web-0d4548
+  name: quigg-rf-outlets
   friendly_name: rf-switch
 
 esphome:
@@ -47,113 +47,126 @@ dashboard_import:
 web_server:
 
 external_components:
-  - source:
-      type: local
-      path: components
-    
+  source: github://DonKracho/ESPHome-External-Components/components@main
+
 switch:
   - platform: rf_switch
-    name: 'Leuchter'
+    name: 'Licht'
+    icon: mdi:lightbulb
     channel: 0
-    output: rf_transmitter 
+    output: rf_transmitter
+
   - platform: rf_switch
-    name: 'Fenster'
+    name: 'Quigg 01'
+    icon: mdi:power-socket-de
     channel: 1
-    output: rf_transmitter 
+    output: rf_transmitter
+
   - platform: rf_switch
-    name: 'Home'
+    name: 'Quigg 02'
+    icon: mdi:power-socket-de
     channel: 2
-    output: rf_transmitter 
+    output: rf_transmitter
+
   - platform: rf_switch
-    name: 'Funk 03'
-    icon: "mdi:power-socket-de"
+    name: 'Quigg 03'
+    icon: mdi:power-socket-de
     channel: 3
-    output: rf_transmitter 
-  - platform: rf_switch
-    name: 'Zaun'
-    channel: 4
-    output: rf_transmitter 
-  - platform: rf_switch
-    name: 'Notlicht'
-    channel: 5
-    output: rf_transmitter 
-  - platform: rf_switch
-    name: 'Deko'
-    channel: 6
-    output: rf_transmitter 
-  - platform: rf_switch
-    name: 'Option'
-    channel: 7
-    output: rf_transmitter 
-  - platform: rf_switch
-    name: 'Extras'
-    channel: 8
-    output: rf_transmitter 
-  - platform: rf_switch
-    name: 'Outdoor'
-    channel: 9
-    output: rf_transmitter 
-  - platform: rf_switch
-    name: 'Funk 11'
-    icon: "mdi:power-socket-de"
-    channel: 11
-    output: rf_transmitter 
-  - platform: rf_switch
-    name: 'Funk 12'
-    icon: "mdi:power-socket-de"
-    channel: 12
-    output: rf_transmitter 
-  - platform: rf_switch
-    name: 'Funk 13'
-    icon: "mdi:power-socket-de"
-    channel: 13
-    output: rf_transmitter 
-  - platform: rf_switch
-    icon: "mdi:power-socket-de"
-    name: 'Funk 14'
-    channel: 14
-    output: rf_transmitter 
-  - platform: rf_switch
-    icon: "mdi:power-socket-de"
-    name: 'Funk 15'
-    channel: 15
-    output: rf_transmitter 
+    output: rf_transmitter
+
+# uncomment these switches for usage of more than 4 outlets
+#  - platform: rf_switch
+#    name: 'Quigg 04'
+#    icon: mdi:power-socket-de
+#    channel: 4
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 05'
+#    icon: mdi:power-socket-de
+#    channel: 5
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 06'
+#    icon: mdi:power-socket-de
+#    channel: 6
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 07'
+#    icon: mdi:power-socket-de
+#    channel: 7
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 08'
+#    icon: mdi:power-socket-de
+#    channel: 8
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 09'
+#    icon: mdi:power-socket-de
+#    channel: 9
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 11'
+#    icon: mdi:power-socket-de
+#    channel: 11
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 12'
+#    icon: mdi:power-socket-de
+#    channel: 12
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    name: 'Quigg 13'
+#    icon: mdi:power-socket-de
+#    channel: 13
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    icon: mdi:power-socket-de
+#    name: 'Quigg 14'
+#    channel: 14
+#    output: rf_transmitter
+#
+#  - platform: rf_switch
+#    icon: mdi:power-socket-de
+#    name: 'Quigg 15'
+#    channel: 15
+#    output: rf_transmitter
+
+# special channel used for master function
   - platform: rf_switch
     name: 'Master'
+    id: master
     channel: 10
-    output: rf_transmitter 
+    output: rf_transmitter
 
+# special button for clearing an outlet
+button:
+  - platform: template
+    name: Clear Outlet
+    icon: "mdi:restore"
+    on_press:
+      - switch.turn_off: master
+
+# optional use of other ESP pins for ralays
   - platform: gpio
-    name: 'Pumpe'
-    icon: "mdi:water-pump"
-    pin:
-      number: GPIO16  #D0
-      inverted: true
-  - platform: gpio
-    name: 'Brunnen'
+    name: 'Springbrunnen'
     icon: "mdi:fountain"
     pin:
       number: GPIO5 #D1
       inverted: true
-  - platform: gpio
-    name: 'Gewächshaus-Boden'
-    icon: 'mdi:water'
-    pin: GPIO4  #D2
-  - platform: gpio
-    name: 'Gewächshaus-Sprinkler'
-    icon: 'mdi:water'
-    pin: GPIO14 #D5
-  - platform: gpio
-    name: 'Südwand-Terasse'
-    icon: 'mdi:water'
-    pin: GPIO13 #D7
-  - platform: gpio
-    name: 'Hochbeete-Rasen'
-    icon: 'mdi:water'
-    pin: GPIO15 #D8
 
+# this output component must exist! It is used as output for all rf_switches
 output:
   - platform: rf_outlet
     id: rf_transmitter
-    pin: GPIO12 #D6
+    pin: GPIO2 # D4 (LED pin), do not invert this pin, because it uses an encoded float!
     repeat: 6
