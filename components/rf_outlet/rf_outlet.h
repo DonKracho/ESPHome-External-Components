@@ -26,6 +26,7 @@ class RfOutlet : public output::FloatOutput, public Component {
   void set_repeat(uint16_t repeat) { repeat_ = repeat; }
   
   bool isSending();
+  bool isCountRemaining() { return mPulseCount < mCnt || mRepeatCount < mRep; };
   uint32_t loadNextPulse();
 
   InternalGPIOPin *tx_pin_{nullptr}; // digital output pin for driving the data input of the 433MHz sender. Do not use pin 10, it is required for timer compare
@@ -44,7 +45,6 @@ class RfOutlet : public output::FloatOutput, public Component {
   void endPulse();
 
   bool isLastPulse() { if (mPulseCount > mCnt) { mSending = false; return true; } return false; }
-  bool isCountRemaining() { return mPulseCount < mCnt || mRepeatCount < mRep; };
   void dump() {};
 
   std::vector<Command> mCommandQueue;
