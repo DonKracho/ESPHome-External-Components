@@ -40,12 +40,12 @@ void RfOutlet::setup() {
 }
 
 void RfOutlet::loop() {
-  // sending a command code squence takes a while, new commands have to wait until transmitting finisched
+  // sending a command code squence takes a while, subsequent commands have to wait until transmitting has finished
   // Check for command in the queue when transmitter is not sending
   if (!isSending() && !mCommandQueue.empty()) {
-	Command cmd = mCommandQueue.front();
-	mCommandQueue.erase(mCommandQueue.begin());
-	command(cmd.channel, cmd.state);
+    Command cmd = mCommandQueue.front();
+    mCommandQueue.erase(mCommandQueue.begin());
+    command(cmd.channel, cmd.state);
     ESP_LOGD(TAG, "channel %d %s", cmd.channel, cmd.state ? "on": "off");
   }
 }
@@ -53,7 +53,7 @@ void RfOutlet::loop() {
 void RfOutlet::write_state(float state) {
   //ESP_LOGD(TAG, "write_state(%f)", state);
   Command cmd;
-  cmd.channel = 1000.0f * state + 0.5f;	// wired float estimation;)
+  cmd.channel = 1000.0f * state + 0.5f;	// some wired float estimations;)
   cmd.state = cmd.channel >= 500;
   if (cmd.state) cmd.channel -= 500;
   mCommandQueue.push_back(cmd);
@@ -75,7 +75,7 @@ uint32_t RfOutlet::loadNextPulse()
   } else if (mRepeatCount < mRep) {
     mRepeatCount++;
     mPulseCount = 0;
-	pulse_us = duration[mPulseCount++] * mClk;
+    pulse_us = duration[mPulseCount++] * mClk;
     timer1_write(pulse_us);
   } else {
     tx_pin_->digital_write(false);    // esure to disable RF transmitter
@@ -140,7 +140,7 @@ void RfOutlet::transmitCode()
 
 bool RfOutlet::isSending()
 {
-   return mSending || mFilling;
+  return mSending || mFilling;
 }
 
 bool RfOutlet::beginPulse(int clkus, int repeat)
@@ -163,7 +163,7 @@ void RfOutlet::endPulse()
 {
   if (mCnt <= 0 || (mCnt & 1) != 0)
   {
-	ESP_LOGCONFIG(TAG, "Warning: invalid pulse count of %d", mCnt);
+    ESP_LOGCONFIG(TAG, "Warning: invalid pulse count of %d", mCnt);
   }
   else
   {
