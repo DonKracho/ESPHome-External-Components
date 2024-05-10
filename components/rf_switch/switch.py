@@ -4,7 +4,7 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome import pins
 from esphome.components import switch, output
-from esphome.const import CONF_ID, CONF_OUTPUT_ID, CONF_OUTPUT, CONF_DATA
+from esphome.const import CONF_ID, CONF_OUTPUT
 
 rf_switch_ns = cg.esphome_ns.namespace('rf_switch')
 RfSwitch = rf_switch_ns.class_('RfSwitch', switch.Switch, cg.Component)
