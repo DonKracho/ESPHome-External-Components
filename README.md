@@ -17,5 +17,5 @@ In dieser externen ESPHome Komponente ist exemplarisch der Rolling-Code eines Se
 
 Fie Komponente __rf_transmiter__ war mein erster Ansatz vergleichbar der Implemetation der ESPHome Komponente __remote_transmitter__. Dies erwies sich aber eher als eine Fingerübung für mich, wie Automationen getriggert werden können. Eine Automation ist der der deutlich kompliziertere Weg. Nachdem ich nicht gleich herausgefunden habe, wie ich der Automation Parameter übergeben kann, habe ich diesen Ansatz also wieder verworfen. Der Code kann als Demonstartion für Automations-Templates genutzt werden.
 
-Für den einfachen Nachbau noch ein kleines Fritzing Schema. Als TX Pin ist im der ESPHome Beispielkonfiguration __quigg-rf-outlets.yaml__ D4 (GPIO2) gewählt worden, das kann aber an die eigenen Bedürfnisse angepasst werden.
+Für den einfachen Nachbau noch ein kleines Fritzing Schema. Als 433MHz Sender ist ein simpler FS1000A (oder ähnlicher) hinreichend. Als TX Pin ist im der ESPHome Beispielkonfiguration __quigg-rf-outlets.yaml__ D4 (GPIO2) gewählt worden, das kann aber an die eigenen Bedürfnisse angepasst werden.
 ![Quigg Funksteckdosen-Set](https://github.com/DonKracho/ESPHome-External-Components/blob/main/images/quigg_funksteckdose_schaltplan.jpg)
