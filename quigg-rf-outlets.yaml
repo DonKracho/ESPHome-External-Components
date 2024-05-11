@@ -148,14 +148,6 @@ switch:
     channel: 10
     output: rf_transmitter
 
-# special button for clearing an outlet
-button:
-  - platform: template
-    name: Clear Outlet
-    icon: "mdi:restore"
-    on_press:
-      - switch.turn_off: master
-
 # optional use of other ESP pins for ralays
   - platform: gpio
     name: 'Springbrunnen'
@@ -163,6 +155,14 @@ button:
     pin:
       number: GPIO5 #D1
       inverted: true
+
+# special button for clearing an outlet
+button:
+  - platform: template
+    name: Clear Outlet
+    icon: "mdi:restore"
+    on_press:
+      - switch.turn_off: master
 
 # this output component must exist! It is used as output for all rf_switches
 output:
