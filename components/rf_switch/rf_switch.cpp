@@ -11,7 +11,7 @@ void RfSwitch::write_state(bool state) {
   // ESPHome float_output does allow states between 0.0 and 1.0 only.
   // Do some magic to code channel and state into a float value
   float value = (state) ? 0.5f : 0.0f;
-  output_->set_level(value + (0.001f * channel_) + (0.016f  * group_);
+  output_->set_level(value + (0.001f * channel_) + (0.016f  * group_));
 
   // optimistic acknowledge of new state by publishing it
   publish_state(state);

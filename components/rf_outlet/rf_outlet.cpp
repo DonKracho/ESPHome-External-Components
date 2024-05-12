@@ -56,7 +56,7 @@ void RfOutlet::write_state(float state) {
   cmd.channel = 1000.0f * state + 0.5f;	// some wired float estimations;)
   cmd.state = cmd.channel >= 500;
   if (cmd.state) { cmd.channel -= 500; }
-  if (cmd.channel >= 16) { cmd.channel -= 16; group = 1; }
+  if (cmd.channel >= 16) { cmd.channel -= 16; cmd.group = 1; }
   mCommandQueue.push_back(cmd);
 }
 
