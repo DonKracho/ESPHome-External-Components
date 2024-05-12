@@ -38,7 +38,7 @@ class RfOutlet : public output::FloatOutput, public Component {
   uint16_t repeat_;
 
  private:
-  bool command(int channel, bool on);
+  bool command(int group, int channel, bool on);
   bool prepareCode(uint32_t code);
   void transmitCode();
   bool beginPulse(int clk, int rep);
