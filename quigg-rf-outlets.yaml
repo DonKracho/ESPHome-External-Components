@@ -144,9 +144,15 @@ switch:
 # special channel used for master function
   - platform: rf_switch
     name: 'Master'
-    id: master
     channel: 10
     output: rf_transmitter
+
+  - platform: rf_switch
+    id: clear
+    channel: 2  # master of group 1
+    group: 1    # use altermative master of group 1
+    output: rf_transmitter
+    internal: true
 
 # optional use of other ESP pins for ralays
   - platform: gpio
@@ -162,7 +168,7 @@ button:
     name: Clear Outlet
     icon: "mdi:restore"
     on_press:
-      - switch.turn_off: master
+      - switch.turn_off: clear
 
 # this output component must exist! It is used as output for all rf_switches
 output:
