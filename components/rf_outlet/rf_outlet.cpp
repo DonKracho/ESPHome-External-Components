@@ -45,8 +45,8 @@ void RfOutlet::loop() {
   if (!isSending() && !mCommandQueue.empty()) {
     Command cmd = mCommandQueue.front();
     mCommandQueue.erase(mCommandQueue.begin());
-    command(cmd.channel, cmd.state);
-    ESP_LOGD(TAG, "channel %d %s", cmd.channel, cmd.state ? "on": "off");
+    command(cmd.group, cmd.channel, cmd.state);
+    ESP_LOGD(TAG, "group %d channel %d %s", cmd.group, cmd.channel, cmd.state ? "on": "off");
   }
 }
 
@@ -55,7 +55,8 @@ void RfOutlet::write_state(float state) {
   Command cmd;
   cmd.channel = 1000.0f * state + 0.5f;	// some wired float estimations;)
   cmd.state = cmd.channel >= 500;
-  if (cmd.state) cmd.channel -= 500;
+  if (cmd.state) { cmd.channel -= 500; }
+  if (cmd.channel >= 16) { cmd.channel -= 16; group = 1; }
   mCommandQueue.push_back(cmd);
 }
 
@@ -86,13 +87,13 @@ uint32_t RfOutlet::loadNextPulse()
   return pulse_us;
 }
 
-bool RfOutlet::command(int channel, bool state)
+bool RfOutlet::command(int group, int channel, bool state)
 {
   bool ret = !isSending();  
   if (ret) {
     if (channel < 0 || channel > 15) return false;
     
-    uint32_t code = (((channel & 2) && state) || (!(channel & 2) && !state)) ? code_evn[nextCode] : code_odd[nextCode];
+    uint32_t code = (((channel & 2) && state) || (!(channel & 2) && !state)) ? code_evn[nextCode][group] : code_odd[nextCode][group];
     nextCode = (nextCode < 3) ? nextCode + 1 : 0;
     prepareCode(code | channel);
     transmitCode(); // sending the code is interrupt driven. The main loop should continue. Use isSending() for checking status.
