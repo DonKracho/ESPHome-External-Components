@@ -52,8 +52,8 @@ class RfOutlet : public output::FloatOutput, public Component {
 
   // in case of interference use the alternative channel group 16 to 32, the master channel will be 18 then
   // rolling codes            group 3,4,7,B / 1,2,9,A  house 1, Master 10         group 1,5,6,A / 2,7,8,B  house A, Master 2
-  uint32_t code_odd[4][2] = { { 0x158230UL, 0x180C40UL, 0x1B5A70UL, 0x1629B0UL }, { 0xA69710UL, 0xABB250UL, 0xA77E60UL, 0xA460A0UL } };
-  uint32_t code_evn[4][2] = { { 0x12B710UL, 0x1CCE20UL, 0x193390UL, 0x14D6A0UL }, { 0xAF4F20UL, 0xAE0570UL, 0xA9E980UL, 0xAC2AB0UL } };
+  uint32_t code_odd[2][4] = { { 0x158230UL, 0x180C40UL, 0x1B5A70UL, 0x1629B0UL }, { 0xA69710UL, 0xABB250UL, 0xA77E60UL, 0xA460A0UL } };
+  uint32_t code_evn[2][4] = { { 0x12B710UL, 0x1CCE20UL, 0x193390UL, 0x14D6A0UL }, { 0xAF4F20UL, 0xAE0570UL, 0xA9E980UL, 0xAC2AB0UL } };
 
   int nextCode{0};
   int mPulseCount{0};
