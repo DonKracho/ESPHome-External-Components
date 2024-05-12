@@ -12,6 +12,7 @@ namespace rf_outlet {
 #define PULSE_COUNT_MAX 200
 
 struct Command {
+  int  group{0};
   int  channel{0};
   bool state{false};
 };
