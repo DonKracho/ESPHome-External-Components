@@ -93,7 +93,7 @@ bool RfOutlet::command(int group, int channel, bool state)
   if (ret) {
     if (channel < 0 || channel > 15) return false;
     
-    uint32_t code = (((channel & 2) && state) || (!(channel & 2) && !state)) ? code_evn[nextCode][group] : code_odd[nextCode][group];
+    uint32_t code = (((channel & 2) && state) || (!(channel & 2) && !state)) ? code_evn[group][nextCode] : code_odd[group][nextCode];
     nextCode = (nextCode < 3) ? nextCode + 1 : 0;
     prepareCode(code | channel);
     transmitCode(); // sending the code is interrupt driven. The main loop should continue. Use isSending() for checking status.
