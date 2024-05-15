@@ -1,0 +1,109 @@
+esphome:
+  name: rf-sensor
+  friendly_name: rf-sensor
+  project:
+    name: esphome.web
+    version: '1.0'
+
+
+esp8266:
+  board: d1_mini
+
+# Enable logging
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Rf-Sensor Fallback Hotspot"
+    password: "1nMPy4vSePyB"
+
+captive_portal:
+
+dashboard_import:
+  package_import_url: github://esphome/example-configs/esphome-web/esp8266.yaml@main
+  import_full_config: true
+
+# To have a "next url" for improv serial
+web_server:
+
+external_components:
+  source: github://DonKracho/ESPHome-External-Components/components@main
+  refresh: 0s
+
+rf_scanner:
+  data_pin: GPIO13  # pin where the 433MHZ receiver data output is connected to
+  led_pin: GPIO2    # optional for scanning feedback via onboard LED
+  id: my_scanner
+
+sensor: # force switch source to be added used by internal temperatur, humidity and precipiation sensors
+
+text_sensor:
+  - platform: rf_scanner
+    name: 'Carport'
+    rf_scanner: my_scanner
+    id: carport
+    rfid: 179
+    chan: 0
+    temperature:
+      name: "Carport Temp"
+    humidity:
+      name: "Carport Humi"
+
+  - platform: rf_scanner
+    name: 'Holzhaus'
+    rf_scanner: my_scanner
+    id: holzhaus
+    rfid: 20
+    chan: 1
+    temperature:
+      name: "Holzhaus Temp"
+    humidity:
+      name: "Holzhaus Humi"
+
+  - platform: rf_scanner
+    name: 'Gewächshaus'
+    rf_scanner: my_scanner
+    id: gewaechshaus
+    rfid: 135
+    chan: 2
+    temperature:
+      name: "Gewächshaus Temp"
+    humidity:
+      name: "Gewächshaus Humi"
+
+  - platform: rf_scanner
+    name: 'Kühlschrank'
+    rf_scanner: my_scanner
+    id: kuehlschrank
+    rfid: 124
+    chan: 0
+    temperature:
+      name: "Kühlschrank Temp"
+    humidity:
+      name: "Kühlschrank Humi"
+
+  - platform: rf_scanner
+    name: 'Niederschlag'
+    rf_scanner: my_scanner
+    id: niederschlag
+    rfid: 214
+    chan: 3
+    precipitation:
+      name: "Niederschlag abs."
+
+# this dummy sensor catches all sensors not defined before
+# also used to get the new rfid after battery change
+  - platform: rf_scanner
+    name: 'Unbekannt'
+    rf_scanner: my_scanner
+    id: unbekannt
