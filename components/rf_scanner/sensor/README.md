@@ -1,4 +1,4 @@
-## This sensor component experimental!
+## This sensor component is experimental only!
 
 and not maintained for the last rf_scanner release. It returns the sensor state as a float (txid.channel).
 
