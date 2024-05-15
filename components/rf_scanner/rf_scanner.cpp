@@ -3,17 +3,19 @@
 #include "esphome/core/log.h"
 #include "esphome.h"
 
+//#define DUMMY_RECEIVER
+
 namespace esphome {
 namespace rf_scanner {
 
 Config cfg;
 
 static const char *const TAG = "rf_scanner";
-static uint16_t  gauge_count = 0;
 
 float RfScanner::get_setup_priority() const { return setup_priority::HARDWARE; }
 
 void RfScanner::setup() {
+# ifndef DUMMY_RECEIVER
   // trasnfer settings to global Config class which is used a wrapper do old tx_decoder code
   dpin_->setup();
   cfg.Tx.RecvPin = dpin_->get_pin();
@@ -27,10 +29,11 @@ void RfScanner::setup() {
   }
   cfg.Tx.Type = TX_DIGOO;   // use TX_GTECH to decode GT-WT-02 sensors
   txd.Setup();
+# endif
 }
 
 void RfScanner::loop() {
-#if 0  // generate a test record every 10s
+# ifdef DUMMY_RECEIVER  // generate a test record every 10s
   static uint32_t last_us = 0;
   uint32_t time_us = millis();
 
@@ -39,21 +42,21 @@ void RfScanner::loop() {
     last_us = time_us;
     SensorMessage data;
     scan_data(&data);
-#else
+# else
     TXDecoder::rec scan;
     txd.Loop();
     if (txd.GetRecord(scan)) {
       SensorMessage data;
       data.txid = scan.txid;
       data.channel = scan.channel;
-	    if (data.channel == 3) {  // channel 3 has special encoding for rain count
-		    data.precipitation = scan.humidity * RAINFACTOR;
-	    } else {
-		    data.humidity = scan.humidity;
-		    data.temperature = scan.temperature * 0.1f;
-	    }
+      if (data.channel == 3) {  // channel 3 has special encoding for rain count
+        data.precipitation = scan.humidity * RAINFACTOR;
+      } else {
+        data.humidity = scan.humidity;
+        data.temperature = scan.temperature * 0.1f;
+      }
       data.battery = scan.battery;
-#endif
+# endif
     for (auto sensor : sensors_) {
       int16_t txid = sensor->get_txid();
       int16_t chan = sensor->get_chan();
@@ -79,17 +82,21 @@ void RfScanner::dump_config() {
 
 bool RfScanner::scan_data(struct SensorMessage *message)
 {
+# ifdef DUMMY_RECEIVER
+  static uint16_t  gauge_count = 0;
+
   // generate some test data
   uint8_t ids[8][2] { { 179, 1 }, {20, 2}, {135, 3}, {214, 4}, {39, 1}, {127, 4}, {222, 2}, {45, 3} };
   uint8_t index = rand() % 8;
   message->txid = ids[index][0];
   message->channel = ids[index][1];
-	if (message->channel == 4) {
-		message->precipitation = gauge_count++ * 0.25f;
-	} else {
-		message->humidity = 65.0f + (rand() % 100) * 0.05f;
-		message->temperature = 22.1f + (rand() % 100) * 0.01f;
-	}
+  if (message->channel == 4) {
+    message->precipitation = gauge_count++ * 0.25f;
+  } else {
+    message->humidity = 65.0f + (rand() % 100) * 0.05f;
+    message->temperature = 22.1f + (rand() % 100) * 0.01f;
+  }
+# endif
   return true;
 }
 
